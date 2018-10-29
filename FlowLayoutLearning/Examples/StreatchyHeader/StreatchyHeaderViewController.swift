@@ -31,9 +31,11 @@ class StreatchyHeaderViewController: UICollectionViewController {
     }
     
     private func initializeCollectionView() {
-        self.collectionView.register(CollectionViewHeader.self,
+        self.collectionView.register(StreatchyCollectionViewHeader.self,
                                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                      withReuseIdentifier: "header")
+        self.collectionView.register(TabLayoutCollectionViewHeader.self, forSupplementaryViewOfKind: "TabLayout", withReuseIdentifier: "tablayoutHeader")
+        
         self.collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "cell")
     }
     
@@ -52,14 +54,21 @@ class StreatchyHeaderViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        if let imageHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader,
-                                                                             withReuseIdentifier: "header",
-                                                                             for: indexPath) as? CollectionViewHeader {
-            
-            return imageHeader
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath)
+            if let sectionHeaderView = supplementaryView as? StreatchyCollectionViewHeader {
+                sectionHeaderView.backgroundColor = .blue
+            }
+            return supplementaryView
+        case "TabLayout":
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "tablayoutHeader", for: indexPath)
+            if let tabLayout = supplementaryView as? TabLayoutCollectionViewHeader {
+                tabLayout.backgroundColor = .red
+            }
+            return supplementaryView
+        default: fatalError("Unexpected element kind")
         }
-        
-        return UICollectionReusableView()
     }
 }
 

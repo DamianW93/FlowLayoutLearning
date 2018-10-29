@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewHeader: UICollectionReusableView {
+class StreatchyCollectionViewHeader: UICollectionReusableView {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -37,5 +37,9 @@ class CollectionViewHeader: UICollectionReusableView {
          imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
          imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
          imageView.heightAnchor.constraint(equalToConstant: 200)].forEach { $0.isActive = true }
+    }
+    
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
     }
 }
